@@ -1,0 +1,152 @@
+:root {
+  --color-purple: #53437f;
+  --color-purple-light: #53437f;
+  --color-white: #ffffff;
+  --color-pink-light: #ffd9e8;
+  --color-pink: #ff9bb6;
+  --color-lilac: #9968e2;
+  --color-lilab-light: #be9bff;
+  --color-blue-light: #7fceff;
+  --color-blue: #6d81ff;
+  --color-green: #2c6f99;
+  --color-green-light: #00bcaa;
+  --color-brown-light: #c48f9e;
+  --color-brown: #8e586f;
+  --color-red: #ff5470;
+  --color-orange: #ff9b71;
+  --color-yellow: #ffd9ae;
+  --color-background: #201f36;
+
+  --page-width: 1100px;
+}
+
+@font-face {
+  font-family: Neo; /* set name */
+  src: url(fonts/MochiyPopOne-Regular.ttf); /* url of the font */
+}
+
+html {
+  background: linear-gradient(
+    35deg,
+    var(--color-brown-light) 0%,
+    var(--color-yellow) 100%
+  );
+  min-height: 100vh;
+  min-width: 100vw;
+  padding-bottom: 30px;
+}
+
+body {
+  font-family: Neo;
+  padding: 0;
+  margin: 0;
+
+  color: var(--color-white);
+}
+
+header {
+  max-width: var(--page-width);
+  margin: 30px auto;
+  display: flex;
+  flex-direction: row;
+  color: var(--color-green);
+  padding: 1rem;
+
+  background: linear-gradient(
+    35deg,
+    var(--color-pink-light) 0%,
+    var(--color-green-light) 150%
+  );
+  border: 3px solid var(--color-purple);
+  border-radius: 100px;
+
+  font-size: 64px;
+
+  .header-links {
+    margin-left: auto;
+    padding-right: 32px;
+  }
+
+  .logo {
+    width: 64px;
+    height: 64px;
+    fill: var(--color-purple);
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    padding-left: 32px;
+  }
+}
+
+section {
+  max-width: var(--page-width);
+  margin: 0 auto;
+}
+
+.logo:hover {
+  fill: white;
+}
+
+.game-list {
+  list-style-type: none;
+  list-style: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  li {
+    color: var(--color-purple-light);
+    display: flex;
+    flex-direction: column;
+    width: 29%;
+    margin: 2%;
+    border: 3px solid var(--color-purple);
+    box-sizing: border-box;
+    height: 400px;
+    background: linear-gradient(
+      45deg,
+      var(--color-yellow) 0%,
+      var(--color-blue-light) 100%
+    );
+    filter: drop-shadow(10px 12px 0px var(--color-purple));
+    transition: filter 0.2s ease-in, border 0.2s ease-in;
+    overflow: hidden;
+
+    img {
+      border: 10px dashed var(--color-pink);
+      background-color: var(--color-pink-light);
+      margin: auto;
+      width: calc(100% - 20px);
+      height: calc(100% - 20px);
+      object-fit: cover;
+      transition: border 0.5s ease, backgrond-color 0.5s ease;
+    }
+
+    p {
+      padding: 16px;
+      margin: 0;
+    }
+    h2 {
+      margin: 0;
+      padding: 10px;
+      /* min-height: 80px; */
+      background: var(--color-yellow);
+      border-bottom: 5px dotted var(--color-orange);
+    }
+  }
+  li:hover {
+    border: 3px solid var(--color-orange);
+    filter: drop-shadow(10px 12px 0px var(--color-orange));
+
+    img {
+      border: 10px dashed var(--color-pink-light);
+      background-color: var(--color-pink);
+    }
+  }
+}
