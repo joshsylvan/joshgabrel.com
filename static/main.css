@@ -181,6 +181,7 @@ section {
     transition: filter 0.2s ease-in, border 0.2s ease-in;
     a {
       text-decoration: none;
+      color: var(--color-purple-light);
       display: flex;
       flex-direction: column;
       width: 100%;

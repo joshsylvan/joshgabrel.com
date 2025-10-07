@@ -1,6 +1,5 @@
 import { buildRoutes } from "./src/buildRoutes.ts";
 import { getTemplateString } from "./src/getTemplateString.ts";
-import { insertMainCSS } from "./src/templating/insertMainCss.ts";
 import { RouteMap } from "./src/types.ts";
 
 console.log("Loading static assets");
@@ -22,12 +21,10 @@ Deno.serve({ port: 8080 }, async (req) => {
       const temaplteString = await getTemplateString(
         "./template/template.html"
       );
-      let fullPageString = temaplteString.replace(
+      const fullPageString = temaplteString.replace(
         "<template />",
         Deno.readTextFileSync(route.filePath ?? "") as string
       );
-      // TODO: a bit hacky but works to keep it simple "././"
-      fullPageString = insertMainCSS(fullPageString, "././" + route.filePath);
 
       return new Response(encoder.encode(fullPageString));
     } else {

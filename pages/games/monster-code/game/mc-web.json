@@ -1,0 +1,18 @@
+{
+"companyName": "Gabrel",
+"productName": "MonsterCode",
+"productVersion": "1.0",
+"dataUrl": "mc-web.data.unityweb",
+"asmCodeUrl": "mc-web.asm.code.unityweb",
+"asmMemoryUrl": "mc-web.asm.memory.unityweb",
+"asmFrameworkUrl": "mc-web.asm.framework.unityweb",
+"TOTAL_MEMORY": 268435456,
+"graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
+"webglContextAttributes": {"preserveDrawingBuffer": false},
+"backgroundUrl": "mc-web.jpg",
+"splashScreenStyle": "Light",
+"backgroundColor": "#FFFFFF",
+"developmentBuild": false,
+"multithreading": false,
+"unityVersion": "2019.4.2f1"
+}

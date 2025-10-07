@@ -1,1 +1,108 @@
-ZOOMBIES
+<script>
+  function onGameLoaded() {}
+  function loadGame() {
+    UnityLoader.instantiate(
+      "unity-container",
+      "monster-code/game/mc-web.json",
+      {
+        compatibilityCheck: function (unityInstance, onsuccess, onerror) {
+          if (!UnityLoader.SystemInfo.hasWebGL) {
+            unityInstance.popup("Your browser does not support WebGL", [
+              { text: "OK", callback: onerror },
+            ]);
+          } else if (UnityLoader.SystemInfo.mobile) {
+            unityInstance.popup(
+              "Please note that Unity WebGL is not currently supported on mobiles. Press OK if you wish to continue anyway.",
+              [{ text: "OK", callback: onsuccess }]
+            );
+          } else if (
+            ["Edge", "Firefox", "Chrome", "Safari"].indexOf(
+              UnityLoader.SystemInfo.browser
+            ) == -1
+          ) {
+            unityInstance.popup(
+              "Please note that your browser is not currently supported for this Unity WebGL content. Press OK if you wish to continue anyway.",
+              [{ text: "OK", callback: onsuccess }]
+            );
+          } else {
+            onsuccess();
+          }
+        },
+        onProgress: (gameData, progress) => {
+          console.log(`Loading Unity Project ${Math.round(progress * 100)}%`);
+        },
+        Module: {
+          onRuntimeInitialized: () => {
+            console.log("Finished loading Monster Code");
+          },
+        },
+      }
+    );
+  }
+
+  const onPlayClick = (event) => {
+    event.target.disabled = true;
+    event.target.innerText = "⏳";
+    event.target.setAttribute("loading", "");
+
+    const script = document.createElement("script");
+    script.src = "/UnityLoader.js";
+    script.onload = loadGame;
+    document.head.appendChild(script);
+  };
+</script>
+<section>
+  <div class="game-section">
+    <h1>Monster Code</h1>
+    <p>
+      A game made in 2017 to teach children about programmatic thinking. It took
+      around a month to make and I was fortunate enough to run it at a
+      children's code club with a previous employer.
+    </p>
+    <img
+      alt="Monster code screenshot"
+      src="monster-code/images/monster-1.png"
+    />
+    <p>
+      I would love to remake this properly at some point in the future when I
+      have more time to release it.
+    </p>
+    <img
+      alt="Monster code screenshot"
+      src="monster-code/images/monster-2.png"
+    />
+    <p>
+      To play you need to analyse the enemies instructions (top of the window)
+      and build your own sequence to counter their moves.
+    </p>
+    <p>The available tiles are:</p>
+    <ul>
+      <li>Attack</li>
+      <li>Defend</li>
+      <li>Move left</li>
+      <li>Move right</li>
+    </ul>
+    <a href="https://github.com/joshsylvan/MonsterCode" target="_blank">
+      ⚠️Source code is available here. (Code is not great and was made on a
+      tight schedule) ⚠️
+    </a>
+    <h2>Play now in the browser!</h2>
+    <p>Made for desktop, but will work in landscape mode on mobile.</p>
+    <div class="game-wrapper">
+      <div
+        id="unity-container"
+        width="800px"
+        height="450px"
+        style="width: 800px; height: 450px; display: flex; margin: auto"
+      >
+        <button
+          id="play-now"
+          class="play-now-button"
+          onclick="onPlayClick(event)"
+        >
+          Play Now!
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

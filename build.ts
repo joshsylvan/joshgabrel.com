@@ -1,8 +1,7 @@
 import * as fs from "@std/fs";
 import { getFileDetails } from "./src/getFileDetails.ts";
 import { getTemplateString } from "./src/getTemplateString.ts";
-import { getBaseFolderLayer } from "./src/fileSystem/getBaseFolderLayer.ts";
-import { insertMainCSS } from "./src/templating/insertMainCss.ts";
+// import { insertMainCSS } from "./src/templating/insertMainCss.ts";
 
 const BUILD_DIR: string = "./build";
 
@@ -67,8 +66,7 @@ routes.forEach(({ buildDir, folder, htmlPath, fileName }) => {
     Deno.mkdirSync(buildDir, { recursive: true });
   }
   const routeString = getTemplateString(htmlPath);
-  let pageString = baseTemplate.replaceAll("<template />", routeString);
-  pageString = insertMainCSS(pageString, htmlPath);
+  const pageString = baseTemplate.replaceAll("<template />", routeString);
 
   Deno.writeTextFile(`${buildDir}/${fileName}`, pageString);
 
