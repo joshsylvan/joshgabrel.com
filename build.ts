@@ -1,6 +1,8 @@
 import * as fs from "@std/fs";
 import { getFileDetails } from "./src/getFileDetails.ts";
 import { getTemplateString } from "./src/getTemplateString.ts";
+import { getBaseFolderLayer } from "./src/fileSystem/getBaseFolderLayer.ts";
+import { insertMainCSS } from "./src/templating/insertMainCss.ts";
 
 const BUILD_DIR: string = "./build";
 
@@ -21,15 +23,14 @@ moveStaticFilesToBuildDir();
 
 interface BuildRoute {
   htmlPath: string;
+  fileName: string;
   folder: string;
   buildDir: string;
-  relativePath: string;
 }
 
 const getPageRoutes = () => {
   const routes: BuildRoute[] = [];
   const folders = ["./pages"];
-  let currentLevel = "";
   while (folders.length) {
     const currentFolder = folders.shift();
     if (currentFolder === undefined) break;
@@ -48,36 +49,38 @@ const getPageRoutes = () => {
             htmlPath: filePath,
             folder: currentFolder,
             buildDir: currentFolder.replaceAll("./pages", "./build"),
-            relativePath: currentLevel,
+            fileName: entry.name,
           });
         }
       }
     }
-    currentLevel += "../";
   }
   return routes;
 };
 const routes = getPageRoutes();
-console.log(routes);
 
 // BUILD HTML FILES
 const baseTemplate = getTemplateString("./template/template.html");
-routes.forEach(({ buildDir, folder, htmlPath, relativePath }) => {
+routes.forEach(({ buildDir, folder, htmlPath, fileName }) => {
   console.log("Building Page " + htmlPath);
   if (buildDir !== BUILD_DIR) {
     Deno.mkdirSync(buildDir, { recursive: true });
   }
-
   const routeString = getTemplateString(htmlPath);
   let pageString = baseTemplate.replaceAll("<template />", routeString);
+  pageString = insertMainCSS(pageString, htmlPath);
 
-  const linkRegex = /<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi;
-  pageString = pageString.replaceAll(linkRegex, (match) => {
-    if (match.includes('href="main.css"')) {
-      return match.replace('href="main.css"', `href=${relativePath}main.css`);
+  Deno.writeTextFile(`${buildDir}/${fileName}`, pageString);
+
+  // Copy over other files in directory
+  const directory = Deno.readDirSync(folder);
+  for (const entry of directory) {
+    if (entry.isFile) {
+      const { extension } = getFileDetails(entry);
+      if (extension === "html") continue;
     }
-    return match;
-  });
-
-  Deno.writeTextFile(buildDir + "/index.html", pageString);
+    fs.copySync(folder + "/" + entry.name, `${buildDir}/${entry.name}`, {
+      overwrite: true,
+    });
+  }
 });

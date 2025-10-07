@@ -8,6 +8,10 @@ const MIME_TYPE_MAP: Record<string, string> = {
   css: "text/css",
   js: "text/javascript",
   ttf: "font/ttf",
+  mp3: "audio/mpeg",
+  wav: "audio/wav",
+  mime: "application/wasm",
+  json: "application/json",
 };
 
 export const buildRoutes = (): RouteMap => {
@@ -88,7 +92,9 @@ export const buildRoutes = (): RouteMap => {
     }
   }
   console.log(
-    Object.entries(routes).map(([key, value]) => [key, value.filePath])
+    Object.entries(routes).map(([key, value]) =>
+      [key, value.filePath].toString()
+    )
   );
   return routes;
 };

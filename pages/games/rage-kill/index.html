@@ -1,0 +1,53 @@
+<section>
+  <div class="game-section">
+    <h1>Rage Kill</h1>
+    <p>
+      A top down shooter made whilst at University to learn JavaScript. Created
+      without any third party libraries, just plain HTML5 and Canvas.
+    </p>
+    <p>Made for desktop browsers, but does not scale to mobile screen sizes.</p>
+    <img src="rage-kill/images/rage-kill-1.png" />
+    <p>
+      Use WASD keys to move around. Hold the arrow keys to fire your weapon.
+    </p>
+    <p>Good luck and be careful of how many bullets you have left.</p>
+    <a href="https://github.com/joshsylvan/rage-kill/tree/main" target="_blank">
+      GitHub Repo - ⚠️ Code has not been touched since university, only recently
+      found and put onto GitHub ⚠️
+    </a>
+    <div
+      class="game-wrapper"
+      style="
+        image-rendering: pixelated;
+        width: 640px;
+        height: 480px;
+      "
+    >
+      <button id="play-now" class="play-now-button" style="position: absolute;" onclick="loadGame(event)">
+        Play Now!
+      </button>
+    <canvas
+      style="margin: auto; image-rendering: pixelated; display: none"
+      id="canvas"
+      width="640px"
+      height="480px"
+    >
+    </div>
+    </canvas>
+    <script>
+      const onGameload = (event) => {};
+      const loadGame = (event) => {
+        event.target.disabled = true;
+        event.target.innerText = "⏳";
+        event.target.setAttribute("loading", "");
+        const script = document.createElement("script");
+        script.src = "rage-kill/rk/index.js";
+        script.onload = () => {
+          event.target.remove();
+        };
+        document.head.appendChild(script);
+        document.getElementById("canvas").style.display = "block";
+      };
+    </script>
+  </div>
+</section>

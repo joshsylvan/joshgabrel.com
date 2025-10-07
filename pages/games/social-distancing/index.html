@@ -1,0 +1,87 @@
+<script>
+  function loadGame() {
+    UnityLoader.instantiate(
+      "unity-container",
+      "social-distancing/game/sdtg-web.json",
+      {
+        compatibilityCheck: function (unityInstance, onsuccess, onerror) {
+          if (!UnityLoader.SystemInfo.hasWebGL) {
+            unityInstance.popup("Your browser does not support WebGL", [
+              { text: "OK", callback: onerror },
+            ]);
+          } else if (UnityLoader.SystemInfo.mobile) {
+            unityInstance.popup(
+              "Please note that Unity WebGL is not currently supported on mobiles. Press OK if you wish to continue anyway.",
+              [{ text: "OK", callback: onsuccess }]
+            );
+          } else if (
+            ["Edge", "Firefox", "Chrome", "Safari"].indexOf(
+              UnityLoader.SystemInfo.browser
+            ) == -1
+          ) {
+            unityInstance.popup(
+              "Please note that your browser is not currently supported for this Unity WebGL content. Press OK if you wish to continue anyway.",
+              [{ text: "OK", callback: onsuccess }]
+            );
+          } else {
+            onsuccess();
+          }
+        },
+        onProgress: () => {
+          console.log("progress");
+        },
+        Module: {
+          onRuntimeInitialized: () => {
+            console.log("done!");
+          },
+        },
+      }
+    );
+  }
+
+  const onPlayClick = (event) => {
+    event.target.disabled = true;
+    event.target.innerText = "⏳";
+    event.target.setAttribute("loading", "");
+
+    const script = document.createElement("script");
+    script.src = "social-distancing/game/UnityLoader.js";
+    script.onload = loadGame;
+    document.head.appendChild(script);
+
+    // console.log(event);
+  };
+</script>
+<section>
+  <div class="game-section">
+    <h1>Social Distancing</h1>
+    <p>A small game made about social distancing.</p>
+    <p>
+      Originally created as a JavaScript and Canvas app in lockdown, which
+      evolved into my first game released on the play store with Unity. It has
+      now been delisted from the play store as I didn't want to keep up with the
+      changing TOS on a small project.
+    </p>
+    <p>
+      Music created by
+      <a target="_blank" href="https://lucasrijllart.com/"> Lucas Rijllart.</a>
+    </p>
+    <h2>Play now in the browser!</h2>
+    <div class="game-wrapper">
+      <div
+        id="unity-container"
+        width="360px"
+        height="680px"
+        style="width: 360px; height: 680px; display: flex; margin: auto"
+      >
+        <button
+          id="play-now"
+          class="play-now-button"
+          onclick="onPlayClick(event)"
+        >
+          Play Now!
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

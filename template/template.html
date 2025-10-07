@@ -12,16 +12,128 @@
       name="viewport"
       content="width=device-width, initial-scale=1, user-scalable=no"
     />
-    <link rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" main />
 
     <!---<noscript
       ><link rel="stylesheet" href="assets/css/noscript.css"
     /></noscript> -->
+    <script>
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let canvas, context;
+      let time = 0;
+      let shapes = [];
+      const speed = 64;
+      const colors = [
+        "#ffffff",
+        "#ffd9e8",
+        "#ff9bb6",
+        "#9968e2",
+        "#be9bff",
+        "#7fceff",
+        "#6d81ff",
+        "#2c6f99",
+        "#00bcaa",
+        "#c48f9e",
+        "#8e586f",
+        "#ff5470",
+        "#ff9b71",
+        "#ffd9ae",
+      ];
+      let lastTime;
+      const createRandomShape = () => ({
+        x: 0 + Math.random() * width,
+        y: 0 + height + Math.random() * height,
+        w: Math.max(16, Math.random() * 64),
+        h: Math.max(16, Math.random() * 64),
+        rotation: Math.random() * 64,
+        type: Math.round(Math.random(0) * 2),
+        color: Math.round(Math.random() * colors.length),
+      });
+      const resetTransform = () => context.setTransform(1, 0, 0, 1, 0, 0);
+      const onAnimationFrame = () => {
+        now = Date.now();
+        if (!lastTime) lastTime = now;
+        let deltaTime = (now - lastTime) / 1000;
+        lastTime = now;
+        time += deltaTime;
+        context.clearRect(0, 0, width, height);
+        shapes.forEach((rect) => {
+          rect.y -= deltaTime * speed;
+          // rect.x += deltaTime * 128;
+          context.strokeStyle = colors[rect.color];
+          context.lineWidth = 5;
+
+          if (rect.type === 0) {
+            context.translate(rect.x - rect.w / 2, rect.y - rect.h / 2);
+            context.rotate((time * rect.rotation * Math.PI) / 180);
+            context.translate(-(rect.x + rect.w / 2), -(rect.y + rect.h / 2));
+            context.strokeRect(rect.x, rect.y, rect.w, rect.h);
+          } else if (rect.type === 1) {
+            context.beginPath();
+            context.arc(rect.x, rect.y, rect.w, 0, 2 * Math.PI, false);
+            context.stroke();
+          } else if (rect.type === 2) {
+            context.translate(rect.x - rect.w / 2, rect.y - rect.w / 2);
+            context.rotate((rect.rotation * Math.PI) / 180);
+            context.translate(-(rect.x + rect.w / 2), -(rect.y + rect.w / 2));
+
+            const sideLength = rect.w * 2;
+            const th = (Math.sqrt(3) / 2) * sideLength; // 60-degree angle height calculation
+            const x3 = rect.x - rect.w + sideLength / 2;
+            const y3 = rect.y + rect.w - th; // For an upward-pointing triangle
+            context.beginPath();
+            context.moveTo(x3, y3);
+            context.lineTo(rect.x - rect.w, rect.y + rect.w);
+            context.lineTo(rect.x + rect.w, rect.y + rect.w);
+            context.closePath();
+            context.stroke();
+          }
+
+          if (rect.y < -64) {
+            rect = createRandomShape();
+          }
+
+          resetTransform();
+        });
+
+        window.requestAnimationFrame(onAnimationFrame);
+      };
+
+      window.onload = () => {
+        for (let i = 0; i < 16; i++) {
+          shapes.push(createRandomShape());
+        }
+
+        canvas = document.getElementById("background-canvas");
+        canvas.setAttribute("width", `${width}px`);
+        canvas.setAttribute("height", `${height}px`);
+        context = canvas.getContext("2d");
+        window.requestAnimationFrame(onAnimationFrame);
+      };
+      window.onresize = () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.setAttribute("width", `${width}px`);
+        canvas.setAttribute("height", `${height}px`);
+      };
+    </script>
   </head>
   <body class="is-preload">
+    <canvas
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        pointer-events: none;
+      "
+      id="background-canvas"
+    ></canvas>
     <header>
-      <p><strong>Josh Gabrel</strong></p>
-
+      <a href="/" class="name"
+        ><p><strong>Josh Gabrel</strong></p></a
+      >
       <div class="header-links">
         <a href="https://github.com/joshsylvan" target="_blank">
           <svg
@@ -36,7 +148,7 @@
             width="438.549px"
             height="438.549px"
             viewBox="0 0 438.549 438.549"
-            style="enable-background: new 0 0 438.549 438.549"
+            style="enable-background: new 0 0 438.549 438.549; display: block"
             xml:space="preserve"
           >
             <g>
@@ -84,6 +196,7 @@
           <svg
             class="logo"
             xmlns="http://www.w3.org/2000/svg"
+            style="display: block"
             height="235.452"
             width="261.728"
             viewBox="0 0 245.371 220.736"
@@ -106,7 +219,7 @@
             width="510px"
             height="510px"
             viewBox="0 0 510 510"
-            style="enable-background: new 0 0 510 510"
+            style="enable-background: new 0 0 510 510; display: block"
             xml:space="preserve"
           >
             <g>
