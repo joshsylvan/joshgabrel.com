@@ -1,1 +1,53 @@
-ZOOMBIES
+<section>
+  <div class="game-section">
+    <h1>Big Z's Pizza Delivery</h1>
+    <p>
+      This year (2025) I finally finished a small 2D game engine. After a while
+      learning some C++ I finally have a "finished" prototype.
+    </p>
+    <p>
+      <strong>Big Z's Pizza Delivery</strong>, is a tiny platformer about
+      delivering Pizza's, paying rent and defeating your langlord.
+    </p>
+    <a
+      style="margin: 0 auto; text-align: center"
+      href="https://joshsylvan.itch.io/big-zs-pizza-delivery"
+      target="_blank"
+    >
+      <h2>Play now on Itch.io!</h2>
+      <img
+        alt="Big Z's pizza delivery screenshot"
+        src="big-z-pizza-delivery/images/screenshot.png"
+      />
+    </a>
+    <p>
+      After a few Handmade Hero episodes and watching some CMake tutorials I
+      made a prototype of my game engine!
+    </p>
+    <h2>Nerd stuff</h2>
+    <p>Built with C++, CMake, OpenGL, OpenAL, ImGui and SDL3.</p>
+    <a href="https://github.com/joshsylvan/pizza_delivery" target="_blank">
+      GitHub Repository
+    </a>
+    <h3>Architecture</h3>
+    <p>
+      The project is split into <i>core</i> (static lib),
+      <i>src</i> (executable), and <i>pizza_delivery</i> (dll / static lib in
+      release).
+    </p>
+    <p>
+      Core contains shared functions for the "engine" and game. It is statically
+      linked into the executable and pizza_delivery library.
+    </p>
+    <p>
+      pizza_delivery contains the game update and render functions. This is
+      built as a standalone library.
+    </p>
+    <p>
+      The src directory contains the main application executable. In debug mode
+      the application will load in the pizza_game library dynamically. If the
+      game library code is updated while the executable is running, the game
+      library is hot reloaded.
+    </p>
+  </div>
+</section>
