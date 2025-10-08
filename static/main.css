@@ -25,11 +25,31 @@
   src: url(fonts/MochiyPopOne-Regular.ttf); /* url of the font */
 }
 
+p,
+h2,
+h1,
+a {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  color: var(--color-blue-light);
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--color-blue);
+}
+
 html {
   background: linear-gradient(
     35deg,
     var(--color-brown-light) 0%,
-    var(--color-yellow) 100%
+    var(--color-yellow) 120%
   );
   min-height: 100vh;
   min-width: 100vw;
@@ -39,65 +59,148 @@ html {
 body {
   font-family: Neo;
   padding: 0;
-  margin: 0;
-
+  margin: 0 16px;
   color: var(--color-white);
 }
 
 header {
   max-width: var(--page-width);
+  margin: 0 auto;
   margin: 30px auto;
-  display: flex;
-  flex-direction: row;
-  color: var(--color-green);
-  padding: 1rem;
-
-  background: linear-gradient(
-    35deg,
-    var(--color-pink-light) 0%,
-    var(--color-green-light) 150%
-  );
-  filter: drop-shadow(0px 10px 0px var(--color-orange));
-  border: 3px solid var(--color-yellow);
-  border-radius: 100px;
-
-  font-size: 64px;
-
-  a {
-    text-decoration: none;
-    color: var(--color-green);
-    transition: color 0.2s ease;
-  }
-  a:hover {
-    color: var(--color-white);
-  }
-
-  .header-links {
+  .header-container {
     display: flex;
     flex-direction: row;
-    margin-left: auto;
-    padding-right: 32px;
+    padding: 0 1rem;
+    background: linear-gradient(
+      35deg,
+      var(--color-purple-light) 0%,
+      var(--color-green-light) 100%
+    );
+    /* filter: drop-shadow(0px -10px 0px var(--color-orange)); */
+    /* border: 5px dotted var(--color-yellow); */
+    border-radius: 50px;
+    align-items: center;
+    text-align: center;
 
-    a {
+    font-size: 64px;
+
+    > a {
+      color: var(--color-white);
+    }
+    > a:hover {
+      color: var(--color-orange);
+    }
+
+    .header-links {
+      display: flex;
+      flex-direction: row;
+      margin-left: auto;
+
+      a {
+        margin: auto;
+        margin-left: 16px;
+        height: fit-content;
+        align-items: center;
+      }
+    }
+
+    .logo {
       margin: auto;
-      margin-left: 16px;
-      height: fit-content;
-      align-items: center;
+      width: 64px;
+      height: 64px;
+      fill: var(--color-white);
+      border-radius: 100%;
+      transition: fill 0.2s ease;
+    }
+    .logo:hover {
+      fill: var(--color-orange);
+    }
+
+    p {
+      font-size: 64px;
+      padding: 10px;
     }
   }
+}
 
-  .logo {
-    margin: auto;
-    width: 64px;
-    height: 64px;
-    fill: var(--color-green);
-    transition: fill 0.2s ease;
+@media only screen and (max-width: 418px) {
+  header {
+    .header-container {
+      p {
+        font-size: 28px;
+        padding-left: 8px;
+      }
+      .logo {
+        width: 32px;
+        height: 32px;
+      }
+      .header-links {
+        display: flex;
+        flex-direction: row;
+        margin-left: auto;
+        padding-right: 8px;
+
+        a {
+          margin-left: 4px;
+          height: fit-content;
+          align-items: center;
+        }
+      }
+    }
   }
+}
 
-  p {
-    margin: 0;
-    padding: 0;
-    padding-left: 32px;
+@media only screen and (min-width: 418px) and (max-width: 560px) {
+  header {
+    .header-container {
+      p {
+        font-size: 34px;
+        padding-left: 16px;
+      }
+      .logo {
+        width: 32px;
+        height: 32px;
+      }
+      .header-links {
+        padding-right: 16px;
+
+        a {
+          margin-left: 4px;
+          height: fit-content;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 560px) and (max-width: 800px) {
+  header {
+    .header-container {
+      p {
+        font-size: 48px;
+        padding-left: 16px;
+      }
+      .logo {
+        width: 48px;
+        height: 48px;
+      }
+      .header-links {
+        padding-right: 16px;
+
+        a {
+          margin-left: 8px;
+          height: fit-content;
+          align-items: center;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 780px) {
+  /* Styles */
+  header {
   }
 }
 
@@ -135,12 +238,8 @@ section {
   h1 {
     text-align: center;
     font-size: 64px;
-    margin: 0;
-    padding: 0;
   }
   p {
-    font-size: 16px;
-    margin: 0;
     padding: 16px 0;
     i {
       color: var(--color-orange);
@@ -148,12 +247,7 @@ section {
   }
   a {
     margin: 16px 0;
-    color: var(--color-blue-light);
   }
-}
-
-.logo:hover {
-  fill: white;
 }
 
 .game-list {
@@ -165,12 +259,12 @@ section {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
 
   li {
     color: var(--color-purple-light);
-    width: 29%;
-    margin: 2%;
+    width: 31%;
+    margin-bottom: 32px;
     border: 3px solid var(--color-purple);
     box-sizing: border-box;
     height: 400px;
@@ -215,11 +309,24 @@ section {
   li:hover {
     border: 3px solid var(--color-white);
     filter: drop-shadow(20px 24px 0px var(--color-purple));
+  }
+}
 
-    /* img {
-      border: 10px solid var(--color-purple);
-      background-color: var(--color-purple);
-    } */
+@media only screen and (max-width: 540px) {
+  /* Styles */
+  .game-list {
+    li {
+      width: 100%;
+    }
+  }
+}
+
+@media only screen and (min-width: 540px) and (max-width: 780px) {
+  /* Styles */
+  .game-list {
+    li {
+      width: 48%;
+    }
   }
 }
 
